@@ -5,8 +5,10 @@ public class EnemyMove : MonoBehaviour
 {
 	[SerializeField]
 	private float moveSpeed = 10.0f;
+    [SerializeField]
+    private int damage = 10;
 
-	private Rigidbody2D rigidBody;
+    private Rigidbody2D rigidBody;
 	private int direction = -1;
 
     // Player object
@@ -38,5 +40,12 @@ public class EnemyMove : MonoBehaviour
 //			rigidBody.AddForce (-1 * transform.right * moveSpeed);
 //		}
 	}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if our attack box collided with an enemy
+        if (collision.gameObject.name == "Player")
+            collision.gameObject.SendMessage("ApplyDamage", damage);
+    }
 }
 

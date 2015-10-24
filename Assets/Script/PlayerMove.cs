@@ -7,7 +7,9 @@ public class PlayerMove : MonoBehaviour
 	private float moveSpeed = 5.0f;
     [SerializeField]
     private float jumpForce = 15000.0f;
-	private float defaultJumpForce;
+    [SerializeField]
+    private int hp = 100;
+    private float defaultJumpForce;
 
     [SerializeField]
 	private Rigidbody2D rigidBody;
@@ -28,7 +30,8 @@ public class PlayerMove : MonoBehaviour
 	void Start ()
 	{
 		defaultJumpForce = jumpForce;
-	}
+        attackBox.enabled = false;
+    }
 
 	void Update ()
 	{
@@ -74,6 +77,7 @@ public class PlayerMove : MonoBehaviour
             rigidBody.AddForce(Vector2.up * jumpForce * Time.fixedDeltaTime);
 
             isGrounded = false;
+            attackBox.enabled = true;
         }
 
         // Have player take into account a drag coefficient if we're on the ground and no longer moving
@@ -87,7 +91,10 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Cube")
+        {
             isGrounded = true;
+            attackBox.enabled = false;
+        }
     }
 
 	public void ApplyJumpBoost (float jumpBoost, float duration)
@@ -104,10 +111,15 @@ public class PlayerMove : MonoBehaviour
 		jumpForce = defaultJumpForce;
 	}
 
+    private void ApplyDamage(int damage)
+    {
+        hp -= damage;
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // Check if our attack box collided with an enemy
-        if (collider.gameObject.tag == "Enemy" && !isGrounded)
+        if (collider.gameObject.tag == "Enemy")
         {
 			if (zombieDeathParticles != null)
 			{
