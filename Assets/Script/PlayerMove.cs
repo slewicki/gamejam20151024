@@ -117,6 +117,8 @@ public class PlayerMove : MonoBehaviour
             // Kill a bitch
             collider.gameObject.SetActive(false);
             Destroy(collider.gameObject);
+
+			rigidBody.AddForce (Vector2.up * jumpForce * Time.fixedDeltaTime);
         }
     }
 }
