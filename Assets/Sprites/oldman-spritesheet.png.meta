@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ba77a979ed97be14594dedab2d3837c6
-timeCreated: 1445716752
+timeCreated: 1445723581
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,7 @@ TextureImporter:
     21300004: oldman-spritesheet_2
     21300006: oldman-spritesheet_3
     21300008: oldman-spritesheet_4
+    21300010: oldman-spritesheet_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -102,6 +103,16 @@ TextureImporter:
         y: 902
         width: 84
         height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: oldman-spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 797
+        width: 77
+        height: 93
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

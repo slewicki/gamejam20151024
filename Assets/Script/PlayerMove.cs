@@ -73,7 +73,8 @@ public class PlayerMove : MonoBehaviour
         {
             rigidBody.AddForce(Vector2.up * jumpForce * Time.fixedDeltaTime);
 
-            isGrounded = false;
+			isGrounded = false;
+			anim.SetBool ("isGrounded", isGrounded);
         }
 
         // Have player take into account a drag coefficient if we're on the ground and no longer moving
@@ -86,8 +87,11 @@ public class PlayerMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Cube")
-            isGrounded = true;
+        if (collision.gameObject.name == "Cube") 
+		{
+			isGrounded = true;
+			anim.SetBool ("isGrounded", isGrounded);
+		}
     }
 
 	public void ApplyJumpBoost (float jumpBoost, float duration)
