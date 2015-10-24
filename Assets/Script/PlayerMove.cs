@@ -9,6 +9,8 @@ public class PlayerMove : MonoBehaviour
     private float jumpForce = 15000.0f;
     [SerializeField]
 	private Rigidbody2D rigidBody;
+	[SerializeField]
+	private Animator anim;
 
     private bool isGrounded = true;
 	
@@ -20,7 +22,17 @@ public class PlayerMove : MonoBehaviour
 
         if (horizontalInput > 0 || horizontalInput < 0)
         {
-            Debug.Log(horizontalInput);
+			if (anim != null)
+			{
+				anim.SetFloat ("Horizontal", Mathf.Abs (horizontalInput));
+			}
+
+			int direction = (int) Mathf.Sign (horizontalInput);
+			if (Mathf.Sign (direction) != Mathf.Sign (transform.localScale.x))
+			{
+				transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y);
+			}
+
             rigidBody.AddForce(Vector2.right * horizontalInput * moveSpeed * Time.fixedDeltaTime);
         }
 
