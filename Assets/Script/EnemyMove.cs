@@ -9,17 +9,25 @@ public class EnemyMove : MonoBehaviour
 	private Rigidbody2D rigidBody;
 	private int direction = -1;
 
+    // Player object
+    private Transform target;
+
 	void Start ()
 	{
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
+        target = GameObject.Find("Player").transform;
 	}
 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if (Input.GetKeyDown (KeyCode.BackQuote)) 
+        // Get change of direction to face the player
+        int curDirection = Mathf.Abs(direction);
+        curDirection = (target.position.x < transform.position.x) ? curDirection * -1 : curDirection;
+        
+		if (curDirection != direction) 
 		{
-			direction *= -1;
+			direction = curDirection;
 			transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y);
 		}
 
