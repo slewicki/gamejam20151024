@@ -24,8 +24,10 @@ public class EnemySpawn : MonoBehaviour
             // Check to see if we can spawn anything or if something is in our spawn box
             if (!Physics.CheckSphere(transform.position, spawnRadius))
             {
-                GameObject enemy = enemyUnits[UnityEngine.Random.Range(0, enemyUnits.Length)];
+                int randomIndex = UnityEngine.Random.Range(0, enemyUnits.Length);
+                GameObject enemy = enemyUnits[randomIndex];
                 Instantiate(enemy, transform.position, Quaternion.identity);
+                enemy.name = enemyUnits[randomIndex].name;
             }
 
             SetSpawnTime();

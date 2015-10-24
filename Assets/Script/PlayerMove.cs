@@ -13,6 +13,10 @@ public class PlayerMove : MonoBehaviour
 	private Rigidbody2D rigidBody;
 	[SerializeField]
 	private Animator anim;
+    [SerializeField]
+    private BoxCollider2D hitBox;
+    [SerializeField]
+    private BoxCollider2D attackBox;
 
     private bool isGrounded = true;
 
@@ -97,5 +101,16 @@ public class PlayerMove : MonoBehaviour
 	{
 		jumpForce = defaultJumpForce;
 	}
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        // Check if our attack box collided with an enemy
+        if (collider.gameObject.tag == "Enemy")
+        {
+            // Kill a bitch
+            collider.gameObject.SetActive(false);
+            Destroy(collider.gameObject);
+        }
+    }
 }
 
