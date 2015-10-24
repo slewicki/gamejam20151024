@@ -141,11 +141,6 @@ public class PlayerMove : MonoBehaviour
 
 			rigidBody.AddForce (Vector2.up * jumpForce * Time.fixedDeltaTime);
         }
-
-		if (collider.gameObject.layer == LayerMask.NameToLayer ("DeathBoundary")) 
-		{
-			Kill ();
-		}
     }
 
 	public void Kill ()
