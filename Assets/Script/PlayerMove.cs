@@ -7,21 +7,48 @@ public class PlayerMove : MonoBehaviour
 	private float moveSpeed = 5.0f;
     [SerializeField]
     private float jumpForce = 15000.0f;
+	private float defaultJumpForce;
+
     [SerializeField]
 	private Rigidbody2D rigidBody;
 	[SerializeField]
 	private Animator anim;
 
     private bool isGrounded = true;
-	
+
+	private float currentBoostDuration = 0.0f;
+	private float boostTimer = 0.0f;
+
+	void Start ()
+	{
+		defaultJumpForce = jumpForce;
+	}
+
+	void Update ()
+	{
+		if (currentBoostDuration > 0.0f)
+		{
+			if (boostTimer >= currentBoostDuration)
+			{
+				RemoveJumpBoost ();
+				boostTimer = 0.0f;
+				currentBoostDuration = 0.0f;
+			}
+			else
+			{
+				boostTimer += Time.deltaTime;
+			}
+		}
+	}
+
 	// Update is called once per frames
 	private void FixedUpdate ()
 	{
 		float horizontalInput = Input.GetAxis ("Horizontal");
         bool hasJumped = (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W));
 
-        if (horizontalInput > 0 || horizontalInput < 0)
-        {
+        if (horizontalInput > 0 || horizontalInput < 0) 
+		{
 			if (anim != null)
 			{
 				anim.SetFloat ("Horizontal", Mathf.Abs (horizontalInput));
@@ -38,7 +65,6 @@ public class PlayerMove : MonoBehaviour
 
         if (hasJumped && isGrounded)
         {
-            Debug.Log(hasJumped);
             rigidBody.AddForce(Vector2.up * jumpForce * Time.fixedDeltaTime);
 
             isGrounded = false;
@@ -57,5 +83,19 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.name == "Cube")
             isGrounded = true;
     }
+
+	public void ApplyJumpBoost (float jumpBoost, float duration)
+	{
+		if (duration > 0.0f) 
+		{
+			jumpForce = jumpBoost;
+			currentBoostDuration = duration;
+		}
+	}
+
+	private void RemoveJumpBoost ()
+	{
+		jumpForce = defaultJumpForce;
+	}
 }
 
