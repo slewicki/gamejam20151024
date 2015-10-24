@@ -17,6 +17,8 @@ public class PlayerMove : MonoBehaviour
     private BoxCollider2D hitBox;
     [SerializeField]
     private BoxCollider2D attackBox;
+	[SerializeField]
+	private GameObject zombieDeathParticles;
 
     private bool isGrounded = true;
 
@@ -107,6 +109,11 @@ public class PlayerMove : MonoBehaviour
         // Check if our attack box collided with an enemy
         if (collider.gameObject.tag == "Enemy")
         {
+			if (zombieDeathParticles != null)
+			{
+				GameObject.Instantiate (zombieDeathParticles, collider.transform.position, collider.transform.rotation);
+			}
+
             // Kill a bitch
             collider.gameObject.SetActive(false);
             Destroy(collider.gameObject);
