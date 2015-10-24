@@ -24,6 +24,7 @@ public class PlayerMove : MonoBehaviour
 	private GameObject zombieDeathParticles;
 
 	public static event Action PlayerDeath;
+	public static event Action EnemyDeath;
 
     private bool isGrounded = true;
 
@@ -138,6 +139,9 @@ public class PlayerMove : MonoBehaviour
             // Kill a bitch
             collider.gameObject.SetActive(false);
             Destroy(collider.gameObject);
+
+            if (EnemyDeath != null)
+                EnemyDeath();
 
 			rigidBody.AddForce (Vector2.up * jumpForce * Time.fixedDeltaTime);
         }
