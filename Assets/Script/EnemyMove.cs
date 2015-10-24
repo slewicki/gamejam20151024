@@ -12,14 +12,14 @@ public class EnemyMove : MonoBehaviour
     // Player object
     private Transform target;
 
-	void Start ()
+	private void Start ()
 	{
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
         target = GameObject.Find("Player").transform;
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	private void FixedUpdate ()
 	{
         // Get change of direction to face the player
         int curDirection = Mathf.Abs(direction);

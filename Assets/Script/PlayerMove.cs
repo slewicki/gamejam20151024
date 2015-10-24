@@ -8,7 +8,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private float jumpForce = 15000.0f;
     [SerializeField]
-	private Rigidbody2D rigidBody;
+    private Rigidbody2D rigidBody;
+    [SerializeField]
+    private BoxCollider2D hitBox;
+    [SerializeField]
+    private BoxCollider2D attackBox;
 
     private bool isGrounded = true;
 	
@@ -44,6 +48,17 @@ public class PlayerMove : MonoBehaviour
     {
         if (collision.gameObject.name == "Cube")
             isGrounded = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        // Check if our attack box collided with an enemy
+        if (collider.gameObject.tag == "Enemy")
+        {
+            // Kill a bitch
+            collider.gameObject.SetActive(false);
+            Destroy(collider.gameObject);
+        }
     }
 }
 
