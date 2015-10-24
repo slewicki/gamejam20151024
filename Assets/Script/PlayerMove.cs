@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class PlayerMove : MonoBehaviour
@@ -21,6 +22,8 @@ public class PlayerMove : MonoBehaviour
     private BoxCollider2D attackBox;
 	[SerializeField]
 	private GameObject zombieDeathParticles;
+
+	public static event Action PlayerDeath;
 
     private bool isGrounded = true;
 
@@ -115,6 +118,11 @@ public class PlayerMove : MonoBehaviour
     private void ApplyDamage(int damage)
     {
         hp -= damage;
+
+		if (hp <= 0) 
+		{
+			Kill ();
+		}
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -133,6 +141,19 @@ public class PlayerMove : MonoBehaviour
 
 			rigidBody.AddForce (Vector2.up * jumpForce * Time.fixedDeltaTime);
         }
+
+		if (collider.gameObject.layer == LayerMask.NameToLayer ("DeathBoundary")) 
+		{
+			Kill ();
+		}
     }
+
+	public void Kill ()
+	{
+		if (PlayerDeath != null) 
+		{
+			PlayerDeath ();
+		}
+	}
 }
 
