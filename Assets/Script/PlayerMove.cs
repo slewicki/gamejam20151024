@@ -107,7 +107,7 @@ public class PlayerMove : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // Check if our attack box collided with an enemy
-        if (collider.gameObject.tag == "Enemy")
+        if (collider.gameObject.tag == "Enemy" && !isGrounded)
         {
 			if (zombieDeathParticles != null)
 			{
